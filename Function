@@ -1,0 +1,29 @@
+Function DetectDuplicates(cellContent As String) As String
+    Dim words() As String
+    Dim wordDict As Object
+    Dim result As String
+    Dim i As Integer
+    Set wordDict = CreateObject("Scripting.Dictionary")
+    
+    ' Séparer les mots par virgule
+    words = Split(cellContent, ",")
+    
+    ' Parcourir les mots
+    For i = LBound(words) To UBound(words)
+        Dim w As String
+        w = Trim(words(i)) ' supprimer espaces
+        If wordDict.Exists(w) Then
+            If InStr(result, w) = 0 Then
+                If result = "" Then
+                    result = w
+                Else
+                    result = result & ", " & w
+                End If
+            End If
+        Else
+            wordDict.Add w, 1
+        End If
+    Next i
+    
+    DetectDuplicates = result
+End Function
